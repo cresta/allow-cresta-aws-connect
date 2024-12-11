@@ -69,18 +69,18 @@ Resources:
           PolicyDocument:
             Version: 2012-10-17
             Statement:
-              - Effect: Allow
-                Resource: 
-                  - !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}"
-                  - !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}/*"
-                Action:
-                  - "connect:ListQueues"
-                  - "connect:ListUsers"
-                  - "connect:SearchUsers"
-                  - "connect:DescribeUser"
-                  - "connect:DescribeContact"
-                  - "connect:SearchContacts"
-                  - "connect:ListInstanceStorageConfigs"
+              Effect: Allow
+              Resource: 
+                - !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}"
+                - !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}/*"
+              Action:
+                - "connect:ListQueues"
+                - "connect:ListUsers"
+                - "connect:SearchUsers"
+                - "connect:DescribeUser"
+                - "connect:DescribeContact"
+                - "connect:SearchContacts"
+                - "connect:ListInstanceStorageConfigs"
 Outputs:
   ExternalId:
     Description: External ID for the data access role
