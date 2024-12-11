@@ -70,7 +70,9 @@ Resources:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
-                Resource: !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}"
+                Resource: 
+                  - !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}"
+                  - !Sub "arn:aws:connect:${AWS::Region}:${AWS::AccountId}:instance/${ConnectInstanceId}/*"
                 Action:
                   - "connect:ListQueues"
                   - "connect:ListUsers"
