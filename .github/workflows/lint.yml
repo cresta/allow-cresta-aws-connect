@@ -1,0 +1,15 @@
+name: cfn-lint
+on:
+  - push
+jobs:
+  cfn-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: cfn-lint
+      uses: scottbrenner/cfn-lint-action@v2.4.6
+      with:
+        args: "**/*.yaml"
