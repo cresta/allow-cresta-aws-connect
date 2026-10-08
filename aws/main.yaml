@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: |
-  IAM role for Cresta Amazon Connect Data Access. It uses External ID for third party access.
+  IAM role for Cresta Amazon Connect Data Access. It supports External ID for third party access.
   More information: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html
 Parameters:
   SourceBucketName:
@@ -18,10 +18,9 @@ Parameters:
     ConstraintDescription: ConnectInstanceId is required
   ExternalId:
     Description: >-
-      External ID for the data access role (ask your Cresta account manager)
+      Optional external ID for the data access role (ask your Cresta account manager)
     Type: String
-    AllowedPattern: .+
-    ConstraintDescription: ExternalId is required
+    Default: ""
   IAMRoleName:
     Description: Customize the name of IAM role for ingesting/sending data to Cresta
     Type: String
@@ -31,6 +30,8 @@ Parameters:
       Comma separated list of AWS account IDs allowed to assume the IAM role. DO NOT CHANGE!
     Type: CommaDelimitedList
     Default: 510370324380,488350602631,730335187493,975050116558,302217641952,107136125828
+Conditions:
+  HasExternalId: !Not [!Equals [!Ref ExternalId, ""]]
 Resources:
   CrestaIngestionRole:
     Type: "AWS::IAM::Role"
@@ -49,9 +50,11 @@ Resources:
                       - !Ref CrestaAWSAccountIds
             Action:
               - "sts:AssumeRole"
-            Condition:
-              StringEquals:
-                "sts:ExternalId": !Ref ExternalId
+            Condition: !If
+              - HasExternalId
+              - StringEquals:
+                  "sts:ExternalId": !Ref ExternalId
+              - !Ref "AWS::NoValue"
       RoleName: !Ref IAMRoleName
       Policies:
         - PolicyName: CrestaPostcallAccessS3
@@ -83,7 +86,7 @@ Resources:
                 - "connect:ListInstanceStorageConfigs"
 Outputs:
   ExternalId:
-    Description: External ID for the data access role
+    Description: Optional external ID for the data access role
     Value: !Ref ExternalId
   SourceBucketName:
     Description: S3 Bucket with source data for transfer
