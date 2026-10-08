@@ -5,29 +5,33 @@ Description: |
 Parameters:
   SourceBucketName:
     Description: >-
-      The contents of this bucket will be shared with Cresta. 
-      This is the S3 bucket holding the recordings / transcriptions
+      Name of the S3 bucket containing recordings or transcriptions.
+      Enter only the bucket name, without s3:// or a folder path. Example: acme-connect-recordings
     Type: String
-    AllowedPattern: .+
-    ConstraintDescription: BucketName is required
+    AllowedPattern: "^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$"
+    ConstraintDescription: Enter a valid S3 bucket name without s3:// or a folder path
   ConnectInstanceId:
     Description: >-
-      The ID of the Amazon Connect Instance
+      ID of the Amazon Connect instance. This is the value after instance/ in its ARN.
+      Example: 12345678-1234-1234-1234-123456789012
     Type: String
     AllowedPattern: .+
     ConstraintDescription: ConnectInstanceId is required
   ExternalId:
     Description: >-
-      Optional external ID for the data access role (ask your Cresta account manager)
+      Optional external ID provided by your Cresta account manager. Leave blank if none was provided.
+      Example: acme-connect
     Type: String
     Default: ""
   IAMRoleName:
-    Description: Customize the name of IAM role for ingesting/sending data to Cresta
+    Description: >-
+      Name of the IAM role created for Cresta. Keep the default unless instructed otherwise.
+      Example: CrestaIngestionRole
     Type: String
     Default: CrestaIngestionRole
   CrestaAWSAccountIds:
     Description: >-
-      Comma separated list of AWS account IDs allowed to assume the IAM role. DO NOT CHANGE!
+      Cresta AWS account IDs allowed to assume the role. Keep the prefilled value unchanged.
     Type: CommaDelimitedList
     Default: 510370324380,488350602631,730335187493,975050116558,302217641952,107136125828
 Conditions:

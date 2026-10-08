@@ -12,10 +12,18 @@ This template creates the following AWS resource and policies required by the Cr
 ## Steps to Deploy
 
 1. Log into your admin AWS account/role
-2. Make sure you have switched to the same region as the source S3 Bucket that you want to share with Cresta
+2. Switch to the same AWS Region as your Amazon Connect instance
 3. Deploy the CloudFormation Stack with the `Launch Stack` button above
-4. Fill in all the required parameters
+4. Fill in the parameters using the table below
 5. Click Create stack
+
+| Parameter | What to enter | Example |
+| --- | --- | --- |
+| `SourceBucketName` | The S3 bucket name only. Do not include `s3://` or a folder path. | `acme-connect-recordings` |
+| `ConnectInstanceId` | The value after `instance/` in the Amazon Connect instance ARN. | `12345678-1234-1234-1234-123456789012` |
+| `ExternalId` | The external ID provided by your Cresta account manager, or leave blank if none was provided. | `acme-connect` |
+| `IAMRoleName` | Keep the default unless instructed otherwise. | `CrestaIngestionRole` |
+| `CrestaAWSAccountIds` | Keep the prefilled value unchanged. | No change needed |
 
 Wait for the stack creation to complete.
 Then, in CloudFormation Stack view:
