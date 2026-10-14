@@ -33,7 +33,7 @@ Parameters:
     Description: >-
       Cresta AWS account IDs allowed to assume the role. Keep the prefilled value unchanged.
     Type: CommaDelimitedList
-    Default: 510370324380,488350602631,730335187493,975050116558,302217641952,107136125828
+    Default: 510370324380,488350602631,730335187493,975050116558,302217641952,107136125828,212467110539
 Conditions:
   HasExternalId: !Not [!Equals [!Ref ExternalId, ""]]
 Resources:
